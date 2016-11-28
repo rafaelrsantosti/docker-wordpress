@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  mysql:
+    container_name: database
+    image: mysql:5.7.16
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+
+  wordpress:
+    container_name: app
+    image: wordpress:4.6.1-php7.0-apache
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_PASSWORD: 123456
+    links:
+      - mysql
+    depends_on:
+      - mysql
+
+  s3:
+    container_name: s3
+    image: ignicaodigital/fakes3
+    ports:
+      - 8081:80
+
+
